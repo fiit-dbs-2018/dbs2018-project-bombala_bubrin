@@ -1,0 +1,215 @@
+create table artist
+(
+	id integer default nextval(('"artist_id_seq"'::text)::regclass) not null
+		constraint pk_artist
+			primary key,
+	nick_name varchar(50)
+)
+;
+
+create table artist_like
+(
+	user_id integer,
+	artist_id integer
+		constraint fk_artist_like_artist
+			references artist
+				on update cascade on delete cascade,
+	opinion integer
+)
+;
+
+create index ixfk_artist_like_user
+	on artist_like (user_id)
+;
+
+create index ixfk_artist_like_artist
+	on artist_like (artist_id)
+;
+
+create table artists_style
+(
+	artist_id integer
+		constraint fk_artists_style_artist
+			references artist
+				on update cascade on delete cascade,
+	style_id integer
+)
+;
+
+create index ixfk_artists_style_artist
+	on artists_style (artist_id)
+;
+
+create index ixfk_artists_style_style
+	on artists_style (style_id)
+;
+
+create table concert
+(
+	id integer default nextval(('"concert_id_seq"'::text)::regclass) not null
+		constraint pk_concert
+			primary key,
+	event_id integer,
+	artist_id integer
+		constraint fk_concert_artist
+			references artist
+				on update cascade on delete cascade,
+	time_of_start timestamp
+)
+;
+
+create index ixfk_concert_event
+	on concert (event_id)
+;
+
+create index ixfk_concert_artist
+	on concert (artist_id)
+;
+
+create table event
+(
+	id integer default nextval(('"event_id_seq"'::text)::regclass) not null
+		constraint pk_event
+			primary key,
+	name varchar(50),
+	time_of_start timestamp,
+	city varchar(50),
+	country varchar(50),
+	address varchar(50),
+	ticket_price numeric default 10
+)
+;
+
+alter table concert
+	add constraint fk_concert_event
+		foreign key (event_id) references event
+			on update cascade on delete cascade
+;
+
+create table event_like
+(
+	user_id integer,
+	event_id integer
+		constraint fk_event_like_event
+			references event
+				on update cascade on delete cascade,
+	opinion integer
+)
+;
+
+create index ixfk_event_like_user
+	on event_like (user_id)
+;
+
+create index ixfk_event_like_event
+	on event_like (event_id)
+;
+
+create table post
+(
+	id integer default nextval(('"post_id_seq"'::text)::regclass) not null
+		constraint pk_post
+			primary key,
+	type integer,
+	text varchar(100),
+	event_id integer
+		constraint fk_post_event
+			references event
+				on update cascade on delete cascade,
+	image_url varchar(100)
+)
+;
+
+create index ixfk_post_event
+	on post (event_id)
+;
+
+create table posts_like
+(
+	user_id integer,
+	post_id integer
+		constraint fk_posts_like_post
+			references post
+				on update cascade on delete cascade,
+	opinion integer default 0
+)
+;
+
+create index ixfk_posts_like_user
+	on posts_like (user_id)
+;
+
+create index ixfk_posts_like_post
+	on posts_like (post_id)
+;
+
+create table style
+(
+	id integer default nextval(('"style_id_seq"'::text)::regclass) not null
+		constraint pk_style
+			primary key,
+	name varchar(50)
+)
+;
+
+alter table artists_style
+	add constraint fk_artists_style_style
+		foreign key (style_id) references style
+			on update cascade on delete cascade
+;
+
+create table ticket
+(
+	user_id integer,
+	event_id integer
+		constraint fk_ticket_event
+			references event
+				on update cascade on delete cascade
+)
+;
+
+create index ixfk_ticket_user
+	on ticket (user_id)
+;
+
+create index ixfk_ticket_event
+	on ticket (event_id)
+;
+
+create table "user"
+(
+	id integer default nextval(('"user_id_seq"'::text)::regclass) not null
+		constraint pk_user
+			primary key,
+	name varchar(50),
+	surname varchar(50),
+	password varchar(50),
+	email varchar(50),
+	sex integer default 0
+)
+;
+
+alter table artist_like
+	add constraint fk_artist_like_user
+		foreign key (user_id) references "user"
+			on update cascade on delete cascade
+;
+
+alter table event_like
+	add constraint fk_event_like_user
+		foreign key (user_id) references "user"
+			on update cascade on delete cascade
+;
+
+alter table posts_like
+	add constraint fk_posts_like_user
+		foreign key (user_id) references "user"
+			on update cascade on delete cascade
+;
+
+alter table ticket
+	add constraint fk_ticket_user
+		foreign key (user_id) references "user"
+			on update cascade on delete cascade
+;
+
