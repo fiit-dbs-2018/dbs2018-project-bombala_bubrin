@@ -1,1 +1,7 @@
-# dbs2018-project-bombala_bubrin
+EventsApp
+
+Martin Bombala
+
+Richard Bubrín
+
+
