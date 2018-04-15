@@ -4,14 +4,14 @@ import project.view.panels.LoginPanel;
 import project.view.panels.MenuPanel;
 
 import javax.swing.*;
+import java.sql.SQLException;
 
 public class MyFrame extends JFrame {
 
-
     private final LoginPanel loginPanel;
-    private final MenuPanel menuPanel;
+    private MenuPanel menuPanel;
 
-    public MyFrame() {
+    public MyFrame() throws SQLException {
         setSize(800, 600);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -19,10 +19,8 @@ public class MyFrame extends JFrame {
         setLayout(null);
 
         loginPanel = new LoginPanel(this);
-        menuPanel = new MenuPanel(this);
 
         add(loginPanel);
-        add(menuPanel);
 
         refresh();
     }
@@ -34,12 +32,18 @@ public class MyFrame extends JFrame {
 
     public void openAfterLogin() {
         hideAllPanels();
+        try {
+            menuPanel = new MenuPanel(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        add(menuPanel);
         menuPanel.setVisible(true);
     }
 
     private void hideAllPanels() {
         loginPanel.setVisible(false);
-        menuPanel.setVisible(false);
+
     }
 
     public void closeAfterLogin() {

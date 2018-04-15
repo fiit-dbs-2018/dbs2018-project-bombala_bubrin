@@ -44,21 +44,23 @@ public class DbResolver {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = connection.createStatement();
+            stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             rs = stmt.executeQuery(query);
         } catch (SQLException e) {
             System.err.println("Sql error " + e.getMessage());
         }
-        finally {
-//                try {
-//                    if (stmt != null) {
-//                        stmt.close();
-//                    }
-//                } catch (SQLException e) {
-//                    System.err.println("problem with connection closing "  + e.getMessage());
+//        finally {
+//
+//            try {
+//                if (stmt != null) {
+//                    stmt.close();
 //                }
-        }
+//            } catch (SQLException e) {
+//                System.err.println("problem with connection closing " + e.getMessage());
+//            }
+//        }
         return rs;
+
     }
 
     public void insert(String query) {

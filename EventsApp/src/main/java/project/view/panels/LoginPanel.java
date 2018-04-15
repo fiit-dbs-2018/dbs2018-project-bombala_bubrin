@@ -6,6 +6,8 @@ import project.view.MyFrame;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginPanel extends JPanel {
 
@@ -13,16 +15,17 @@ public class LoginPanel extends JPanel {
     private final JPasswordField passwordField;
     private final MyFrame parent;
 
+
     public LoginPanel(MyFrame myFrame) {
         parent = myFrame;
         setSize(800, 600);
         setLayout(null);
 
-        mailTextField = new JTextField("Apostolos.Knee0@email.com");
+        mailTextField = new JTextField("Kam.Blinebry0@email.com");
         mailTextField.setBounds(20, 20, 200, 30);
         add(mailTextField);
 
-        passwordField = new JPasswordField("KFyD07");
+        passwordField = new JPasswordField("SEp6Ce");
         passwordField.setBounds(20, 70, 200, 30);
         add(passwordField);
 
@@ -32,17 +35,23 @@ public class LoginPanel extends JPanel {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loginClicked();
+                try {
+                    loginClicked();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
     }
 
-    private void loginClicked() {
+    private void loginClicked() throws SQLException {
         String username = mailTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
-
-        if (DbConnectionBuilder.getInstance().userExist(username, password)) {
+        ResultSet login;
+        login = DbConnectionBuilder.getInstance().userExist(username, password);
+        login.beforeFirst();
+        if (login.next()) {
             proceedAfterLogin();
         } else {
             showLoginError();
