@@ -21,11 +21,11 @@ public class LoginPanel extends JPanel {
         setSize(800, 600);
         setLayout(null);
 
-        mailTextField = new JTextField("Kam.Blinebry0@email.com");
+        mailTextField = new JTextField("Melisent.Hoene2@email.com");
         mailTextField.setBounds(20, 20, 200, 30);
         add(mailTextField);
 
-        passwordField = new JPasswordField("SEp6Ce");
+        passwordField = new JPasswordField("YO8zpt");
         passwordField.setBounds(20, 70, 200, 30);
         add(passwordField);
 

@@ -11,23 +11,24 @@ import java.sql.SQLException;
 public class MenuPanel extends JPanel {
 
     final JPanel panel = new JPanel();
-
     ResultSet posts;
-    private JScrollPane vertical;
+    int height;
 
     public MenuPanel(MyFrame myFrame) throws SQLException {
-        panel.setBorder(BorderFactory.createLineBorder(Color.red));
-        panel.setPreferredSize(new Dimension(795, 590));
+
+        posts = loadFeed();
+        height = getRowCount(posts) * 208;
+
+        panel.setBorder(BorderFactory.createEmptyBorder());
+        panel.setPreferredSize(new Dimension(795, height));
 
         final JScrollPane scroll = new JScrollPane(panel);
 
         setLayout(new BorderLayout());
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        add(scroll);
+        this.add(scroll);
         setSize(795, 590);
         setVisible(true);
-        
-        posts = loadFeed();
 
         while(posts.next()){
             PostView postPanel = new PostView(posts);
@@ -53,6 +54,25 @@ public class MenuPanel extends JPanel {
         posts = DbConnectionBuilder.getInstance().selectPosts(DbConnectionBuilder.getInstance().getUserId());
 
         return posts;
+    }
+
+    private int getRowCount(ResultSet resultSet) {
+        if (resultSet == null) {
+            return 0;
+        }
+        try {
+            resultSet.last();
+            return resultSet.getRow();
+        } catch (SQLException exp) {
+            exp.printStackTrace();
+        } finally {
+            try {
+                resultSet.beforeFirst();
+            } catch (SQLException exp) {
+                exp.printStackTrace();
+            }
+        }
+        return 0;
     }
 
 }
