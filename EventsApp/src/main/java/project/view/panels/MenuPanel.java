@@ -35,18 +35,7 @@ public class MenuPanel extends JPanel {
             panel.add(postPanel);
             setVisible(true);
         }
-//        setPreferredSize(new Dimension(200, 250));
-//
-//        vertical = new JScrollPane(console);
-//        vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        add(vertical);
-//        setLayout(null);
 
-//        JTextArea area = new JTextArea("Login succesful");
-//        this.add(area);
-//        setSize(800,600);
-//        setVisible(false);
-//        area.setBounds(20, 20, 200, 30);
     }
 
     private ResultSet loadFeed(){

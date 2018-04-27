@@ -41,8 +41,18 @@ public class LoginPanel extends JPanel {
                     e1.printStackTrace();
                 }
             }
+
         });
 
+        JButton regButton = new JButton("registration");
+        regButton.setBounds(20,160,200,30);
+        add(regButton);
+        regButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registerClicked();
+            }
+        });
     }
 
     private void loginClicked() throws SQLException {
@@ -56,6 +66,10 @@ public class LoginPanel extends JPanel {
         } else {
             showLoginError();
         }
+    }
+
+    private void registerClicked() {
+        parent.openAfterReg();
     }
 
     private void showLoginError() {

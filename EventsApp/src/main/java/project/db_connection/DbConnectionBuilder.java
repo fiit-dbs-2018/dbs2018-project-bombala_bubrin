@@ -68,6 +68,12 @@ public class DbConnectionBuilder {
 //            }
 //        }
     }
+    public void registerUser(String name, String surname, String password, String email, int sex){
+        String query = "INSERT INTO public.user (name, surname, password, email, sex) VALUES" +
+                " ('"+ name +"', '"+surname+"', '"+password+"', '"+email+"', "+sex+");";
+        dbResolver.insert(query);
+
+    }
 
 
     public ResultSet selectPosts(int userId){
