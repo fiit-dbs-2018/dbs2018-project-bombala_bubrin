@@ -14,7 +14,7 @@ public class MyFrame extends JFrame {
     private RegistrationPanel registrationPanel;
 
     public MyFrame() throws SQLException {
-        setSize(800, 600);
+        setSize(805, 670);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
@@ -33,6 +33,7 @@ public class MyFrame extends JFrame {
             e.printStackTrace();
         }
         add(menuPanel);
+        menuPanel.setVisible(false);
 
         refresh();
     }
@@ -46,6 +47,8 @@ public class MyFrame extends JFrame {
         hideAllPanels();
 
         menuPanel.setVisible(true);
+        menuPanel.showPosts();
+        refresh();
     }
 
     public void openAfterReg(){
@@ -61,7 +64,7 @@ public class MyFrame extends JFrame {
 
     private void hideAllPanels() {
         loginPanel.setVisible(false);
-
+        registrationPanel.setVisible(false);
     }
 
     public void closeAfterLogin() {

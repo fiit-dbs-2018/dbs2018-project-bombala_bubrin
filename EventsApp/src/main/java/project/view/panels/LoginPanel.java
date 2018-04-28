@@ -58,14 +58,17 @@ public class LoginPanel extends JPanel {
     private void loginClicked() throws SQLException {
         String username = mailTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
-        ResultSet login;
-        login = DbConnectionBuilder.getInstance().userExist(username, password);
-        login.beforeFirst();
-        if (login.next()) {
+        if(DbConnectionBuilder.getInstance().userExist(username, password)) {
             proceedAfterLogin();
         } else {
             showLoginError();
         }
+//        login.beforeFirst();
+//        if (login.next()) {
+//            proceedAfterLogin();
+//        } else {
+//            showLoginError();
+//        }
     }
 
     private void registerClicked() {

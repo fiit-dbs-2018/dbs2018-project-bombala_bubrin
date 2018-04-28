@@ -10,58 +10,26 @@ import java.sql.SQLException;
 
 public class MenuPanel extends JPanel {
 
-    final JPanel panel = new JPanel();
-    ResultSet posts;
-    int height;
+    private final NavigationBar navigationBar;
+    private final ContentPanel contentPanel;
+    private final MyFrame parent;
 
     public MenuPanel(MyFrame myFrame) throws SQLException {
 
-        posts = loadFeed();
-        height = getRowCount(posts) * 208;
+        parent = myFrame;
+        setSize(800, 670);
+        setLayout(null);
 
-        panel.setBorder(BorderFactory.createEmptyBorder());
-        panel.setPreferredSize(new Dimension(795, height));
+        navigationBar = new NavigationBar(this);
+        add(navigationBar);
 
-        final JScrollPane scroll = new JScrollPane(panel);
+        contentPanel = new ContentPanel(this);
+        add(contentPanel);
 
-        setLayout(new BorderLayout());
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        this.add(scroll);
-        setSize(795, 590);
-        setVisible(true);
-
-        while(posts.next()){
-            PostView postPanel = new PostView(posts);
-            panel.add(postPanel);
-            setVisible(true);
-        }
 
     }
 
-    private ResultSet loadFeed(){
-        ResultSet posts;
-        posts = DbConnectionBuilder.getInstance().selectPosts(DbConnectionBuilder.getInstance().getUserId());
-
-        return posts;
+    public void showPosts() {
+        contentPanel.showPosts();
     }
-
-    private int getRowCount(ResultSet resultSet) {
-        if (resultSet == null) {
-            return 0;
-        }
-        try {
-            resultSet.last();
-            return resultSet.getRow();
-        } catch (SQLException exp) {
-            exp.printStackTrace();
-        } finally {
-            try {
-                resultSet.beforeFirst();
-            } catch (SQLException exp) {
-                exp.printStackTrace();
-            }
-        }
-        return 0;
-    }
-
 }
