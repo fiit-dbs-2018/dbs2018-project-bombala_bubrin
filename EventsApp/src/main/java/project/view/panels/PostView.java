@@ -12,54 +12,64 @@ import java.sql.SQLException;
 
 public class PostView extends JPanel {
 
-//    private JPanel postPanel;
+    //    private JPanel postPanel;
     private Post post;
+    private JButton like;
+    private JButton dislike;
+    private JLabel likeCount;
 
-    public PostView(Post post){
+    public PostView(Post post) {
         this.post = post;
         setLayout(null);
         setSize(650, 200);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JTextArea eventName = new JTextArea(post.getEventName());
-        eventName.setBounds(0,0,650,40);
+        eventName.setBounds(0, 0, 650, 40);
         eventName.setFont(new Font("Calibri", Font.BOLD, 19));
         eventName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.add(eventName);
         JTextArea postText = new JTextArea(post.getText());
-        postText.setBounds(0,40,650,100);
+        postText.setBounds(0, 40, 650, 100);
         postText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.add(postText);
 
         JPanel likes = new JPanel();
         likes.setLayout(null);
-        likes.setBounds(0,140,650,60);
+        likes.setBounds(0, 140, 650, 60);
         likes.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.add(likes);
 
-        JButton like = new JButton("LIKE");
+        like = new JButton("LIKE");
         likes.add(like);
-        JButton dislike = new JButton("DISLIKE");
+        dislike = new JButton("DISLIKE");
         likes.add(dislike);
-        JLabel likeCount = new JLabel(Integer.toString(post.getLikeCount()));
+        likeCount = new JLabel(Integer.toString(post.getLikeCount()));
         likes.add(likeCount);
+        drawButtons(post.getOpinion());
 
-        like.setBounds(10,10,130,40);
-        dislike.setBounds(150,10,130,40);
-        likeCount.setBounds(290,10,40,40);
+        like.setBounds(10, 10, 130, 40);
+        dislike.setBounds(150, 10, 130, 40);
+        likeCount.setBounds(290, 10, 40, 40);
 
         like.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(opinionClicked(1)){
-                    like.setFont(like.getFont().deriveFont(Font.BOLD));
+                int op = post.getOpinion();
+                if (op == 1) {
+                    opinionClicked(0);
+                } else {
+                    opinionClicked(1);
                 }
             }
         });
         dislike.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(opinionClicked(-1)){
-                    dislike.setFont(dislike.getFont().deriveFont(Font.BOLD));
+                int op = post.getOpinion();
+                if (op == -1) {
+                    opinionClicked(0);
+                } else {
+                    opinionClicked(-1);
                 }
             }
         });
@@ -91,10 +101,25 @@ public class PostView extends JPanel {
 //        this.setVisible(true);
     }
 
-    private boolean opinionClicked(int opinion) {
-        if(DbConnectionBuilder.getInstance().likeClick(post.getId(),opinion)){
-            return true;
-        }else return false;
+    private int opinionClicked(int opinion) {
+        int op = DbConnectionBuilder.getInstance().likeClick(post.getId(), opinion);
+        post.setOpinion(op);
+        drawButtons(opinion);
+        return op;
+    }
+
+    private void drawButtons(int opinion) {
+        if (opinion == 1) {
+            like.setFont(like.getFont().deriveFont(Font.BOLD));
+            dislike.setFont(like.getFont().deriveFont(Font.PLAIN));
+        } else if (opinion == 0) {
+            like.setFont(like.getFont().deriveFont(Font.PLAIN));
+            dislike.setFont(like.getFont().deriveFont(Font.PLAIN));
+        } else if (opinion == -1) {
+            like.setFont(like.getFont().deriveFont(Font.PLAIN));
+            dislike.setFont(like.getFont().deriveFont(Font.BOLD));
+        }
+        likeCount.setText(Integer.toString(post.getLikeCount()));
     }
 
 

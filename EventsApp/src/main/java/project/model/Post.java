@@ -56,6 +56,12 @@ public class Post {
         return opinion;
     }
 
+    public void setOpinion(int opinion) {
+        int change = opinion - this.opinion;
+        this.likeCount +=change;
+        this.opinion = opinion;
+    }
+
     public int getLikeCount(){
         return likeCount;
     }

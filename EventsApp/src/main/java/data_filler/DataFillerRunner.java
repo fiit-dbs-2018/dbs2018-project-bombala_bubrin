@@ -15,7 +15,7 @@ public class DataFillerRunner {
 //        FillerDatabaseBuilder.getInstance().insertManyConcerts(20000);
 //        FillerDatabaseBuilder.getInstance().insertManyArtistLikes(10000);
 //        FillerDatabaseBuilder.getInstance().insertManyEventLikes(10000);
-        FillerDatabaseBuilder.getInstance().insertManyPostsLikes(10000);
+//        FillerDatabaseBuilder.getInstance().insertManyPostsLikes(10000);
 //        FillerDatabaseBuilder.getInstance().insertManyArtistsStyles(10000);
     }
 

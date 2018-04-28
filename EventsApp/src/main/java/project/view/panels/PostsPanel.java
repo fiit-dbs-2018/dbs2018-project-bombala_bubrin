@@ -5,12 +5,15 @@ import project.model.Post;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class PostsPanel extends JPanel {
 
     private JPanel postsPanel;
     private JPanel pagination;
+    private int actualPosition;
 
     public PostsPanel(ContentPanel contentPanel) {
         setSize(650, 630);
@@ -43,7 +46,25 @@ public class PostsPanel extends JPanel {
 
         JButton next = new JButton("Next");
         pagination.add(next);
-        next.setBounds(580,0,60,20);
+        next.setBounds(540,0,100,20);
+
+        JButton previous = new JButton("Previous");
+        pagination.add(previous);
+        previous.setBounds(10,0,100,20);
+
+        next.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPosts(actualPosition + 1);
+            }
+        });
+
+        previous.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPosts(actualPosition - 1);
+            }
+        });
 
 
 //        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -96,10 +117,21 @@ public class PostsPanel extends JPanel {
     }
 
 
-    public void showPosts() {
-        List<Post> posts = DbConnectionBuilder.getInstance().selectPosts(DbConnectionBuilder.getInstance().getUserId());
+    public void showPosts(int actualPosition) {
+        if(actualPosition < 0){
+            actualPosition = 0;
+        }
+        this.actualPosition = actualPosition;
+        clearView();
+        List<Post> posts = DbConnectionBuilder.getInstance().selectPosts(DbConnectionBuilder.getInstance().getUserId(), actualPosition);
         for (Post post : posts) {
             drawPost(post);
         }
+    }
+
+    private void clearView() {
+        postsPanel.removeAll();
+        postsPanel.repaint();
+        postsPanel.revalidate();
     }
 }

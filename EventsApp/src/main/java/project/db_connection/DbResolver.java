@@ -27,6 +27,7 @@ public class DbResolver {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/eventapp", "event-app-user",
                     "123456");
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
@@ -64,12 +65,20 @@ public class DbResolver {
     }
 
     public void insert(String query) {
+        System.out.println(query);
+
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("Sql error " + e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         }
         finally {
             try {
@@ -83,6 +92,8 @@ public class DbResolver {
     }
 
     public void update(String query) {
+        System.out.println(query);
+
         Statement stmt = null;
         try {
             stmt = connection.createStatement();

@@ -4,6 +4,8 @@ import project.view.MyFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class NavigationBar extends JPanel {
@@ -30,7 +32,18 @@ public class NavigationBar extends JPanel {
         events.setBounds(10,110,130,40);
         logout.setBounds(10,590,130,40);
 
+        home.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goHome();
+            }
+        });
+
     }
+    private void goHome(){
+        parent.showPosts();
+    }
+
 
 
 

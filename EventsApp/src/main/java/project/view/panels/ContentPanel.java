@@ -1,10 +1,7 @@
 package project.view.panels;
 
-import project.view.MyFrame;
-
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class ContentPanel extends JPanel {
 
@@ -26,7 +23,7 @@ public class ContentPanel extends JPanel {
     public void showPosts() {
         hideAllChildren();
         postsPanel.setVisible(true);
-        postsPanel.showPosts();
+        postsPanel.showPosts(0);
     }
 
     private void hideAllChildren() {

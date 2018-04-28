@@ -5,7 +5,6 @@ import project.model.Post;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DbConnectionBuilder {
 
@@ -14,9 +13,11 @@ public class DbConnectionBuilder {
     private DbConnectionBuilder() {
         dbResolver = new DbResolver();
         dbResolver.connect();
+        postOffset = 0;
     }
 
     private int userId;
+    private int postOffset;
 
     public int getUserId() {
         return userId;
@@ -83,7 +84,7 @@ public class DbConnectionBuilder {
     }
 
 
-    public ArrayList<Post> selectPosts(int userId) {
+    public ArrayList<Post> selectPosts(int userId, int actualPosition) {
         String query =
                 "SELECT p.*, e.name, coalesce(sss.opinion, 0) AS opinion, coalesce(sub.like_count, 0) AS like_count FROM \"user\" AS u JOIN event_like AS el ON u.id = el.user_id JOIN event AS e" +
                         " JOIN post AS p On p.event_id = e.id" +
@@ -91,14 +92,16 @@ public class DbConnectionBuilder {
                         " LEFT JOIN (SELECT p.opinion, p.post_id FROM \"user\" AS u JOIN posts_like AS p ON u.id = p.user_id WHERE u.id = " + userId + " ) AS sss" +
                         " ON sss.post_id = p.id LEFT JOIN (SELECT p.post_id, SUM(p.opinion) AS like_count FROM posts_like AS p GROUP BY p.post_id) AS sub" +
                         " ON sub.post_id = p.id" +
-                        " WHERE u.id = " + userId + " " +
-                        "LIMIT 3;";
+                        " WHERE u.id = " + userId +
+                        " ORDER BY p.id " +
+                        "LIMIT 3 OFFSET " + actualPosition*3;
         ResultSet result = dbResolver.select(query);
         ArrayList<Post> posts = new ArrayList<>();
         try {
             while (result.next()) {
                 Post post = new Post(result);
                 posts.add(post);
+                postOffset = post.getId();
             }
 
         } catch (SQLException e) {
@@ -114,16 +117,12 @@ public class DbConnectionBuilder {
         return posts;
     }
 
-    public boolean likeClick(int postId, int opinion) {
+    public int likeClick(int postId, int opinion) {
         boolean alreadyExists = getOpinion(postId);
-        try {
-            if (alreadyExists) {
-                updateOpinion(postId, opinion);
-            } else {
-                addOpinion(postId, opinion);
-            }
-        } catch (SQLException e) {
-
+        if (alreadyExists) {
+            updateOpinion(postId, opinion);
+        } else {
+            addOpinion(postId, opinion);
         }
         return opinion;
     }
@@ -135,9 +134,9 @@ public class DbConnectionBuilder {
     }
 
     private void updateOpinion(int postId, int opinion) {
-        String query = "UPDATE posts_like" +
-                "SET opinion = " + opinion + "" +
-                "WHERE user_id = " + getUserId() + " AND" +
+        String query = "UPDATE posts_like " +
+                "SET opinion = " + opinion + " " +
+                "WHERE user_id = " + getUserId() + " AND " +
                 "post_id = " + postId + ";";
 
         dbResolver.update(query);
@@ -155,7 +154,7 @@ public class DbConnectionBuilder {
         } catch (SQLException e) {
             return false;
 //            e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 result.getStatement().close();
                 result.close();
