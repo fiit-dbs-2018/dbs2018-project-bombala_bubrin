@@ -65,9 +65,15 @@ public class MyFrame extends JFrame {
     private void hideAllPanels() {
         loginPanel.setVisible(false);
         registrationPanel.setVisible(false);
+        menuPanel.setVisible(false);
     }
 
     public void closeAfterLogin() {
         JOptionPane.showMessageDialog(this, "Login failed");
+    }
+
+    public void logout() {
+        hideAllPanels();
+        loginPanel.setVisible(true);
     }
 }

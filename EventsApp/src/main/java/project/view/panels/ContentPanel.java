@@ -5,7 +5,9 @@ import java.awt.*;
 
 public class ContentPanel extends JPanel {
 
-    private  PostsPanel postsPanel;
+    private PostsPanel postsPanel;
+    private ProfilPanel profilPanel;
+    private Event event;
     private MenuPanel parent;
 
     public ContentPanel(MenuPanel menuPanel) {
@@ -17,6 +19,14 @@ public class ContentPanel extends JPanel {
         postsPanel = new PostsPanel(this);
         add(postsPanel);
 
+        profilPanel = new ProfilPanel(this);
+        add(profilPanel);
+        profilPanel.setVisible(false);
+
+        event = new Event(this);
+        add(event);
+        event.setVisible(false);
+
     }
 
 
@@ -26,7 +36,21 @@ public class ContentPanel extends JPanel {
         postsPanel.showPosts(0);
     }
 
+    public void showProfile(){
+        hideAllChildren();
+        profilPanel.showProfile();
+        profilPanel.setVisible(true);
+
+    }
+
     private void hideAllChildren() {
         postsPanel.setVisible(false);
+        profilPanel.setVisible(false);
+        event.setVisible(false);
+
+    }
+
+    public void logout() {
+        parent.logout();
     }
 }

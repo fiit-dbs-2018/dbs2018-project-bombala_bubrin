@@ -1,6 +1,8 @@
 package project.db_connection;
 
+import project.model.Data;
 import project.model.Post;
+import project.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +46,9 @@ public class DbConnectionBuilder {
 
         try {
             if (result.next()) {
-                setUserId(result.getInt("id"));
+                User user = new User(result);
+                Data.getInstance().setUser(user);
+                setUserId(Data.getInstance().getUser().getId());
                 return true;
             }
         } catch (SQLException e) {
@@ -163,5 +167,23 @@ public class DbConnectionBuilder {
             }
         }
         return false;
+    }
+
+    public void updateUser(String name, String surname, int sex) {
+        String query = "UPDATE \"user\" " +
+                "SET name = '"+name+"', " +
+                "    surname = '"+surname+"', " +
+                "    sex = "+sex+" " +
+                "WHERE id = "+Data.getInstance().getUser().getId()+";";
+
+        dbResolver.update(query);
+
+    }
+
+    public void deleteUser() {
+        String query = "DELETE FROM \"user\" " +
+                "WHERE id = "+Data.getInstance().getUser().getId()+";";
+
+        dbResolver.delete(query);
     }
 }

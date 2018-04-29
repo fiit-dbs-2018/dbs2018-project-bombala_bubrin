@@ -32,4 +32,12 @@ public class MenuPanel extends JPanel {
     public void showPosts() {
         contentPanel.showPosts();
     }
+
+    public void logout() {
+        parent.logout();
+    }
+
+    public void showProfile() {
+        contentPanel.showProfile();
+    }
 }
