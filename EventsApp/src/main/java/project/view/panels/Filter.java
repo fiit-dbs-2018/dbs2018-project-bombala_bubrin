@@ -126,4 +126,11 @@ public class Filter extends JPanel {
         parent.filterEvents(filterName, filterCountry, filterCity, fromPrice, toPrice,filterInt,0);
     }
 
+    public void setAllInit() {
+        fromPrice=5;
+        toPrice=100;
+        eventNameField.setText("");
+        countryField.setText("");
+        cityField.setText("");
+    }
 }

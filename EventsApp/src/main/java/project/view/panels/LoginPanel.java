@@ -63,12 +63,6 @@ public class LoginPanel extends JPanel {
         } else {
             showLoginError();
         }
-//        login.beforeFirst();
-//        if (login.next()) {
-//            proceedAfterLogin();
-//        } else {
-//            showLoginError();
-//        }
     }
 
     private void registerClicked() {

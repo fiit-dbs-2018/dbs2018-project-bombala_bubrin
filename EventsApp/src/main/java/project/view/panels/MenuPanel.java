@@ -34,6 +34,7 @@ public class MenuPanel extends JPanel {
     }
 
     public void logout() {
+        contentPanel.removeEvents();
         parent.logout();
     }
 

@@ -50,16 +50,6 @@ public class DbResolver {
         } catch (SQLException e) {
             System.err.println("Sql error " + e.getMessage());
         }
-//        finally {
-//
-//            try {
-//                if (stmt != null) {
-//                    stmt.close();
-//                }
-//            } catch (SQLException e) {
-//                System.err.println("problem with connection closing " + e.getMessage());
-//            }
-//        }
         return rs;
 
     }

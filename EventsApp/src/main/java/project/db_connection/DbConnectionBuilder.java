@@ -13,6 +13,7 @@ import java.util.List;
 public class DbConnectionBuilder {
 
     private final DbResolver dbResolver;
+    public static final String empty = "";
 
     private DbConnectionBuilder() {
         dbResolver = new DbResolver();
@@ -57,31 +58,9 @@ public class DbConnectionBuilder {
             }
         } catch (SQLException e) {
             return false;
-//            e.printStackTrace();
         }
         return false;
-//        finally {
-//            try {
-//                if (result != null) {
-//                    result.close();
-//                }
-//            } catch (SQLException e) {
-//                System.err.println("problem with connection closing "  + e.getMessage());
-//            }
-//        }
-//
-//        try {
-//            return result.next();
-//        } catch (SQLException e) {
-//            return false;
-//        }finally {
-//            try {
-//                result.getStatement().close();
-//                result.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
+
     }
 
     public void registerUser(String name, String surname, String password, String email, int sex) {
@@ -193,13 +172,21 @@ public class DbConnectionBuilder {
 
     public ArrayList<EventObj> filterEvents(String name, String country, String city, double from, double to, int actualPosition) {
         StringBuilder queryBuilder = new StringBuilder("SELECT * FROM event WHERE ");
-        queryBuilder.append("lower(name) LIKE LOWER('").append(name).append("%') AND ");
-        queryBuilder.append("lower(country) LIKE lower('").append(country).append("%') AND ");
-        queryBuilder.append("lower(city) LIKE LOWER('").append(city).append("%') AND ");
-        queryBuilder.append("ticket_price < ").append(to).append(" AND ticket_price > ").append(from);
-        queryBuilder.append(" LIMIT 3 OFFSET ").append(actualPosition*3);
+        if(name != null && !name.isEmpty()) {
+            queryBuilder.append("lower(name) LIKE LOWER('").append(name).append("%') AND ");
+        }
 
-        System.out.print(queryBuilder.toString());
+        if(country != null && !country.isEmpty()) {
+            queryBuilder.append("lower(country) LIKE lower('").append(country).append("%') AND ");
+        }
+
+        if(city != null && !city.isEmpty()) {
+            queryBuilder.append("lower(city) LIKE LOWER('").append(city).append("%') AND ");
+        }
+
+        queryBuilder.append("ticket_price < ").append(to).append(" AND ticket_price > ").append(from);
+
+        queryBuilder.append(" LIMIT 3 OFFSET ").append(actualPosition*3);
 
         ResultSet result = dbResolver.select(queryBuilder.toString());
         ArrayList<EventObj> events = new ArrayList<>();
@@ -222,5 +209,12 @@ public class DbConnectionBuilder {
         }
 
         return events;
+    }
+
+    public void followEvent(int id) {
+        String query = "INSERT INTO event_like (user_id, event_id, opinion) VALUES ("+Data.getInstance().getUser().getId()+","+id+",1);";
+
+        dbResolver.insert(query);
+
     }
 }

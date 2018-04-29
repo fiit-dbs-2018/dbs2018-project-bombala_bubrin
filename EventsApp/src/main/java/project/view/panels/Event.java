@@ -19,17 +19,15 @@ public class Event extends JPanel {
         add(eventContent);
         add(filter);
 
-
-
-
-
     }
 
-    public void showEvents() {
-
-    }
 
     public void filterEvents(String filterName, String filterCountry, String filterCity, int fromPrice, int toPrice, int filterInt,int pos) {
         eventContent.filterEvents(filterName,filterCountry,filterCity,fromPrice,toPrice,filterInt,pos);
+    }
+
+    public void removeEvents() {
+        eventContent.removeEvents();
+        filter.setAllInit();
     }
 }

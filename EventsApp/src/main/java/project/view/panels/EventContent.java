@@ -109,4 +109,7 @@ public class EventContent extends JPanel {
         eventsPanel.revalidate();
     }
 
+    public void removeEvents() {
+        clearView();
+    }
 }

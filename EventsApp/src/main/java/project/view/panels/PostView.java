@@ -74,31 +74,6 @@ public class PostView extends JPanel {
             }
         });
 
-
-//        this.setPreferredSize(new Dimension(200, 200));
-//
-//        JLabel eventName = new JLabel("");
-//        setSize(700, 200);
-//        eventName.setFont(new Font("Calibri", Font.BOLD, 19));
-//        eventName.setForeground(Color.BLACK);
-//        this.add(eventName, BorderLayout.PAGE_START);
-//
-//        JLabel opinion = new JLabel(""+("tu"+""));
-//        opinion.setBackground(Color.blue);
-//        this.add(opinion, BorderLayout.EAST);
-//
-//        JLabel postText = new JLabel("tu");
-//        postText.setFont(new Font("Calibri", Font.BOLD, 12));
-//        this.add(postText, BorderLayout.CENTER);
-//
-//        JButton like = new JButton("Like");
-//        this.add(like, BorderLayout.PAGE_END);
-//        like.setEnabled(true);
-//
-//
-//
-//
-//        this.setVisible(true);
     }
 
     private int opinionClicked(int opinion) {

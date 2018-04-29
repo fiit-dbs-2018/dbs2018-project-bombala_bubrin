@@ -17,7 +17,6 @@ public class NavigationBar extends JPanel {
         parent = menuPanel;
         this.setBounds(0,0, 150,600);
         setLayout(null);
-//        this.setBackground(Color.RED);
         JButton home = new JButton("Home");
         menuPanel.add(home);
         JButton profile = new JButton("Profile");

@@ -21,12 +21,6 @@ public class PostsPanel extends JPanel {
         setLayout(null);
         setBorder(BorderFactory.createLineBorder(Color.RED));
 
-//        ScrollPane scrollPane = new ScrollPane();
-//        add(scrollPane);
-////        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrollPane.setSize(650, 600);
-//        scrollPane.setBackground(Color.BLUE);
-//        setLayout(null);
 
         postsPanel = new JPanel();
 //        postsPanel.setBorder(BorderFactory.createEmptyBorder());
@@ -65,44 +59,6 @@ public class PostsPanel extends JPanel {
                 showPosts(actualPosition - 1);
             }
         });
-
-
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrollPane.add(podPld);
-
-//        posts = loadFeed();
-//        height = getRowCount(posts) * 208;
-//
-//        postsPanel.setBorder(BorderFactory.createEmptyBorder());
-//        postsPanel.setPreferredSize(new Dimension(795, height));
-
-//        final JScrollPane scroll = new JScrollPane();
-//
-////        setLayout(new BorderLayout());
-//        setLayout(null);
-//        scroll.setSize(650, 600);
-//        this.add(scroll);
-//        setSize(650, 800);
-//        postsPanel = new JPanel();
-//        setBackground(Color.BLACK);
-//        postsPanel.setBackground(Color.RED);
-//        postsPanel.setLayout(null);
-//        add(postsPanel);
-//        scroll.add(postsPanel);
-//        setVisible(false);
-
-//        while (posts.next()) {
-//            PostView postPanel = new PostView(posts);
-//            postsPanel.add(postPanel);
-//            setVisible(true);
-//        }
-    }
-
-    private void loadFeed() {
-//        List<Post> posts;
-//        posts = DbConnectionBuilder.getInstance().selectPosts(DbConnectionBuilder.getInstance().getUserId());
-
-//        return posts;
 
 
     }

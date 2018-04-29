@@ -55,8 +55,12 @@ public class ContentPanel extends JPanel {
     }
 
     public void showEvents() {
-        event.showEvents();
         hideAllChildren();
         event.setVisible(true);
+    }
+
+    public void removeEvents() {
+
+        event.removeEvents();
     }
 }

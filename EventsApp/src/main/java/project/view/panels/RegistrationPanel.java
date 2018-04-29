@@ -88,14 +88,7 @@ public class RegistrationPanel extends JPanel {
         }
         DbConnectionBuilder.getInstance().registerUser(name,surname,password,email,sex);
         proceedAfterRegistration();
-//        ResultSet register;
-//        login = DbConnectionBuilder.getInstance().userExist(username, password);
-//        login.beforeFirst();
-//        if (login.next()) {
-//            proceedAfterLogin();
-//        } else {
-//            showLoginError();
-//        }
+
     }
 
     private void proceedAfterRegistration() {
