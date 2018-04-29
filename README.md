@@ -1,99 +1,99 @@
 # EventsApp
 
-## Martin Bombala, Richard Bubrín
+## Martin Bombala, Richard BubrÃ­n
 
 ### Zadanie
 
-Vo vami zvolenom prostredí vytvorte databázovú aplikáciu, ktorá komplexne rieši nišie definované scenáre vo vami zvolenej doméne. Presnı rozsah a konkretizáciu scenárov si dohodnete s Vašim cvièiacim na cvièení. Projekt sa rieši vo dvojiciach, prièom sa oèakáva, e na synchronizáciu práce so spoluiakom / spoluiaèkou pouijete **git**.
+Vo vami zvolenom prostredÃ­ vytvorte databÃ¡zovÃº aplikÃ¡ciu, ktorÃ¡ komplexne rieÅ¡i niÅ¾Å¡ie definovanÃ© scenÃ¡re vo vami zvolenej domÃ©ne. PresnÃ½ rozsah a konkretizÃ¡ciu scenÃ¡rov si dohodnete s VaÅ¡im cviÄiacim na cviÄenÃ­. Projekt sa rieÅ¡i vo dvojiciach, priÄom sa oÄakÃ¡va, Å¾e na synchronizÃ¡ciu prÃ¡ce so spoluÅ¾iakom / spoluÅ¾iaÄkou pouÅ¾ijete **git**.
 
-### Opis domény 
+### Opis domÃ©ny
 
-Vytvorili sme aplikáciu Eventsapp, ktorá slúi pre pouivate¾ov, ktorı si vedia v aplikácií vytvori svoj vlastnı úèet a následne sa do nej prihlási. Po prihlásení do aplikácie sa pouívate¾om zobrazujú posty eventov, ktoré sledujú. Pouívate¾ môe na jednotlivé posty zada akı má na nich názor, èi u kladnı, alebo zápornı. Pouívate¾ si môe v aplikácií vyhlada eventy, pod¾a kritérií, ktoré si sám nastaví a následne môe zvoli monos, aby sledoval príspevky pre dané udalosti. Pouívate¾ má monos manipulácie  so svojím vlastnım profilom, èo znamená, e si môe svoj profil kedyko¾vek upravi alebo vymaza.
+Vytvorili sme aplikÃ¡ciu Eventsapp, ktorÃ¡ slÃºÅ¾i pre pouÅ¾ivateÄ¾ov, ktorÃ½ si vedia v aplikÃ¡ciÃ­ vytvoriÅ¥ svoj vlastnÃ½ ÃºÄet a nÃ¡sledne sa do nej prihlÃ¡siÅ¥. Po prihlÃ¡senÃ­ do aplikÃ¡cie sa pouÅ¾Ã­vateÄ¾om zobrazujÃº posty eventov, ktorÃ© sledujÃº. PouÅ¾Ã­vateÄ¾ mÃ´Å¾e na jednotlivÃ© posty zadaÅ¥ akÃ½ mÃ¡ na nich nÃ¡zor, Äi uÅ¾ kladnÃ½, alebo zÃ¡pornÃ½. PouÅ¾Ã­vateÄ¾ si mÃ´Å¾e v aplikÃ¡ciÃ­ vyhladaÅ¥ eventy, podÄ¾a kritÃ©riÃ­, ktorÃ© si sÃ¡m nastavÃ­ a nÃ¡sledne mÃ´Å¾e zvoliÅ¥ moÅ¾nosÅ¥, aby sledoval prÃ­spevky pre danÃ© udalosti. PouÅ¾Ã­vateÄ¾ mÃ¡ moÅ¾nosÅ¥ manipulÃ¡cie  so svojÃ­m vlastnÃ½m profilom, Äo znamenÃ¡, Å¾e si mÃ´Å¾e svoj profil kedykoÄ¾vek upraviÅ¥ alebo vymazaÅ¥.
 
-### Popis scenárov
+### Popis scenÃ¡rov
 
-Po spustení aplikácie sa na obrazovke zobrazia dve políèka a dva tlaèidlá. Prvé políèko je pre zadanie nicknamu v podobe mailu, a druhé pre password. Po vyplnení vstupnıch údajov pouívate¾ stlaèí tlaèidlo Login. 
+Po spustenÃ­ aplikÃ¡cie sa na obrazovke zobrazia dve polÃ­Äka a dva tlaÄidlÃ¡. PrvÃ© polÃ­Äko je pre zadanie nicknamu v podobe mailu, a druhÃ© pre password. Po vyplnenÃ­ vstupnÃ½ch Ãºdajov pouÅ¾Ã­vateÄ¾ stlaÄÃ­ tlaÄidlo Login.
 
 **1.Login**
 
-Tlaèidlo Login spustí príkaz ```"SELECT * FROM \"user\" WHERE email LIKE '" + username + "' AND password LIKE '" + password + "'"``` , ktorı zistí èi sa v databáze nachádza danı pouivate¾ s danım heslom. Ak áno obrazovka sa presunie do hlavného okna, inak sa zobrazí oznam o tom, e proces Login neprebehol úspešne.
+TlaÄidlo Login spustÃ­ prÃ­kaz ```"SELECT * FROM \"user\" WHERE email LIKE '" + username + "' AND password LIKE '" + password + "'"``` , ktorÃ½ zistÃ­ Äi sa v databÃ¡ze nachÃ¡dza danÃ½ pouÅ¾ivateÄ¾ s danÃ½m heslom. Ak Ã¡no obrazovka sa presunie do hlavnÃ©ho okna, inak sa zobrazÃ­ oznam o tom, Å¾e proces Login neprebehol ÃºspeÅ¡ne.
 
 ![Login](./Pictures/login.png)
 
 **2.Registration**
 
-Na obrazovke po spustení aplikácie sa tak isto nachádza tlaèidlo Registration. Po stlaèení tohto tlaèidla sa presunie obrazovka do ïa¾šieho okna, kde má pouívate¾ monos sa zaregistrova (vytvori nového usera). V tomto okne vyplní puívae¾ potrebné údaje sa stlaèí tlaèidlo Register, ktoré spustí príkaz ```"INSERT INTO public.user (name, surname, password, email, sex) VALUES" + " ('" + name + "', '" + surname + "', '" + password + "', '" + email + "', " + sex + ");"``` , ktorı vloí pouívate¾a do databázy.
-	
-![Registration](./Pictures/registration.png)	
-	
-**3.Home** 
+Na obrazovke po spustenÃ­ aplikÃ¡cie sa tak isto nachÃ¡dza tlaÄidlo Registration. Po stlaÄenÃ­ tohto tlaÄidla sa presunie obrazovka do ÄaÄ¾Å¡ieho okna, kde mÃ¡ pouÅ¾Ã­vateÄ¾ moÅ¾nosÅ¥ sa zaregistrovaÅ¥ (vytvoriÅ¥ novÃ©ho usera). V tomto okne vyplnÃ­ puÅ¾Ã­vaÅ¥eÄ¾ potrebnÃ© Ãºdaje sa stlaÄÃ­ tlaÄidlo Register, ktorÃ© spustÃ­ prÃ­kaz ```"INSERT INTO public.user (name, surname, password, email, sex) VALUES" + " ('" + name + "', '" + surname + "', '" + password + "', '" + email + "', " + sex + ");"``` , ktorÃ½ vloÅ¾Ã­ pouÅ¾Ã­vateÄ¾a do databÃ¡zy.
 
-Po úspešnom logine sa zobrazí hlavné okno, v ktorom sa vykresluje na ¾avej strane obrazovky navigation bar, ktorı zobrazuje tlaèidlá home, profil, events a logout a na pravej strane obrazovky sa zobrazujú posty eventov, ktoré má pouívate¾ lajknuté. Toto zobrazenie postov zabezpeèuje príkaz ```"SELECT p.*, e.name, coalesce(sss.opinion, 0) AS opinion, coalesce(sub.like_count, 0) AS like_count FROM \"user\" AS u JOIN event_like AS el ON u.id = el.user_id JOIN event AS e" + " JOIN post AS p On p.event_id = e.id" + " ON e.id = el.event_id" + " LEFT JOIN (SELECT p.opinion, p.post_id FROM \"user\" AS u JOIN posts_like AS p ON u.id = p.user_id WHERE u.id = " + userId + " ) AS sss" + " ON sss.post_id = p.id LEFT JOIN (SELECT p.post_id, SUM(p.opinion) AS like_count FROM posts_like AS p GROUP BY p.post_id) AS sub" + " ON sub.post_id = p.id" + " WHERE u.id = " + userId + " ORDER BY p.id " + "LIMIT 3 OFFSET " + actualPosition*3;``` , ktorı sa stará aj o stránkovanie. Toto hlavné okno sa zobrazí pouivate¾ovi aj po stlaèení tlaèidla Home.
-Na to aby pouávate¾ mohol prvı krát lajknú post vyuívame príkaz ```"INSERT INTO posts_like (user_id, post_id, opinion) VALUES" + "  (" + getUserId() + "," + postId + "," + opinion + ");"``` . Ak u puívate¾ má na post zadanı opinion a chce ho zmeni vyuíva sa príkaz ```UPDATE posts_like " + "SET opinion = " + opinion + " " + "WHERE user_id = " + getUserId() + " AND " + "post_id = " + postId + ";"```. Na zistenie, èi u pouívate¾ lajkol nejakı post vyuívame príkaz ```"SELECT * FROM posts_like WHERE user_id = " + getUserId() + " AND post_id = " + postId + ";"```
-	
-![Home](./Pictures/posty.png)	
-	
+![Registration](./Pictures/registration.png)
+
+**3.Home**
+
+Po ÃºspeÅ¡nom logine sa zobrazÃ­ hlavnÃ© okno, v ktorom sa vykresluje na Ä¾avej strane obrazovky navigation bar, ktorÃ½ zobrazuje tlaÄidlÃ¡ home, profil, events a logout a na pravej strane obrazovky sa zobrazujÃº posty eventov, ktorÃ© mÃ¡ pouÅ¾Ã­vateÄ¾ lajknutÃ©. Toto zobrazenie postov zabezpeÄuje prÃ­kaz ```"SELECT p.*, e.name, coalesce(sss.opinion, 0) AS opinion, coalesce(sub.like_count, 0) AS like_count FROM \"user\" AS u JOIN event_like AS el ON u.id = el.user_id JOIN event AS e" + " JOIN post AS p On p.event_id = e.id" + " ON e.id = el.event_id" + " LEFT JOIN (SELECT p.opinion, p.post_id FROM \"user\" AS u JOIN posts_like AS p ON u.id = p.user_id WHERE u.id = " + userId + " ) AS sss" + " ON sss.post_id = p.id LEFT JOIN (SELECT p.post_id, SUM(p.opinion) AS like_count FROM posts_like AS p GROUP BY p.post_id) AS sub" + " ON sub.post_id = p.id" + " WHERE u.id = " + userId + " ORDER BY p.id " + "LIMIT 3 OFFSET " + actualPosition*3;``` , ktorÃ½ sa starÃ¡ aj o strÃ¡nkovanie. Toto hlavnÃ© okno sa zobrazÃ­ pouÅ¾ivateÄ¾ovi aj po stlaÄenÃ­ tlaÄidla Home.
+Na to aby pouÅ¾Ã¡vateÄ¾ mohol prvÃ½ krÃ¡t lajknÃºÅ¥ post vyuÅ¾Ã­vame prÃ­kaz ```"INSERT INTO posts_like (user_id, post_id, opinion) VALUES" + "  (" + getUserId() + "," + postId + "," + opinion + ");"``` . Ak uÅ¾ puÅ¾Ã­vateÄ¾ mÃ¡ na post zadanÃ½ opinion a chce ho zmeniÅ¾ vyuÅ¾Ã­va sa prÃ­kaz ```UPDATE posts_like " + "SET opinion = " + opinion + " " + "WHERE user_id = " + getUserId() + " AND " + "post_id = " + postId + ";"```. Na zistenie, Äi uÅ¾ pouÅ¾Ã­vateÄ¾ lajkol nejakÃ½ post vyuÅ¾Ã­vame prÃ­kaz ```"SELECT * FROM posts_like WHERE user_id = " + getUserId() + " AND post_id = " + postId + ";"```
+
+![Home](./Pictures/posty.png)
+
 **4.Profil**
 
-Po stlaèení tlaèidlá Profile sa pouívate¾ovi zobrazí okno, v ktorom je moné meni pouivate¾ské údaje. Najprv sa mu ukáú pôvodné osobné údaje. Tieto údaje môe zmeni a zmenu zaznamená tlaèidlom Submit, ktoré spúša príkaz ```"UPDATE \"user\" " + "SET name = '"+name+"', " + "    surname = '"+surname+"', " + "    sex = "+sex+" " + "WHERE id = "+Data.getInstance().getUser().getId()+";"``` . V okne, ktoré sa zobrazí po stlaèení tlaèidla Profile, je tak isto ïa¾šie tlaèidlo Delete, ktoré zabezpeèuje vymazanie pouívate¾a z databázy prostredníctvom príkazu ```"DELETE FROM \"user\" " + "WHERE id = "+Data.getInstance().getUser().getId()+";"```
+Po stlaÄenÃ­ tlaÄidlÃ¡ Profile sa pouÅ¾Ã­vateÄ¾ovi zobrazÃ­ okno, v ktorom je moÅ¾nÃ© meniÅ¥ pouÅ¾ivateÄ¾skÃ© Ãºdaje. Najprv sa mu ukÃ¡Å¾Ãº pÃ´vodnÃ© osobnÃ© Ãºdaje. Tieto Ãºdaje mÃ´Å¾e zmeniÅ¥ a zmenu zaznamenÃ¡ tlaÄidlom Submit, ktorÃ© spÃºÅ¡Å¥a prÃ­kaz ```"UPDATE \"user\" " + "SET name = '"+name+"', " + "    surname = '"+surname+"', " + "    sex = "+sex+" " + "WHERE id = "+Data.getInstance().getUser().getId()+";"``` . V okne, ktorÃ© sa zobrazÃ­ po stlaÄenÃ­ tlaÄidla Profile, je tak isto ÄaÄ¾Å¡ie tlaÄidlo Delete, ktorÃ© zabezpeÄuje vymazanie pouÅ¾Ã­vateÄ¾a z databÃ¡zy prostrednÃ­ctvom prÃ­kazu ```"DELETE FROM \"user\" " + "WHERE id = "+Data.getInstance().getUser().getId()+";"```
 
 ![Profil](./Pictures/profil.png)
 
 **5.Event**
 
-Po stlaèení tlaèidla Events, sa pouívate¾ovi zobrazí okno, v ktorom si môe vyfiltrova a zobrazi eventy pod¾a svojich predstáv. Eventu sa filtrujú pomocou príkazu 
-		
+Po stlaÄenÃ­ tlaÄidla Events, sa pouÅ¾Ã­vateÄ¾ovi zobrazÃ­ okno, v ktorom si mÃ´Å¾e vyfiltrovaÅ¥ a zobraziÅ¥ eventy podÄ¾a svojich predstÃ¡v. Eventu sa filtrujÃº pomocou prÃ­kazu
+
 		queryBuilder = new StringBuilder("SELECT * FROM event WHERE ");
         if(name != null && !name.isEmpty()) {
             queryBuilder.append("lower(name) LIKE LOWER('").append(name).append("%') AND ");
         }
- 
+
         if(country != null && !country.isEmpty()) {
             queryBuilder.append("lower(country) LIKE lower('").append(country).append("%') AND ");
         }
- 
+
         if(city != null && !city.isEmpty()) {
             queryBuilder.append("lower(city) LIKE LOWER('").append(city).append("%') AND ");
         }
- 
+
         queryBuilder.append("ticket_price < ").append(to).append(" AND ticket_price > ").append(from);
- 
+
         queryBuilder.append(" LIMIT 3 OFFSET ").append(actualPosition*3);
 
-Pouívate¾ má monos zaèa sledova posty vyhladaného eventu prostredníctvom príkazu ```"INSERT INTO event_like (user_id, event_id, opinion) VALUES ("+Data.getInstance().getUser().getId()+","+id+",1);"```
+PouÅ¾Ã­vateÄ¾ mÃ¡ moÅ¾nosÅ¥ zaÄaÅ¥ sledovaÅ¥ posty vyhladanÃ©ho eventu prostrednÃ­ctvom prÃ­kazu ```"INSERT INTO event_like (user_id, event_id, opinion) VALUES ("+Data.getInstance().getUser().getId()+","+id+",1);"```
 
 ![Event](./Pictures/eventy.png)
 
 ### Data Model
-	
+
 ![Alternative Text](./Pictures/DataModel.png)
 
 #### event
-Tabu¾ka event obsahuje jednotlivé eventy
+TabuÄ¾ka event obsahuje jednotlivÃ© eventy
 #### event_like
-Tabu¾ka event_like je väzobná tabu¾ka, pre zaznamenávanie, ktoré eventy lajkli jednotliví pouivatelia
+TabuÄ¾ka event_like je vÃ¤zobnÃ¡ tabuÄ¾ka, pre zaznamenÃ¡vanie, ktorÃ© eventy lajkli jednotlivÃ­ pouÅ¾ivatelia
 #### post
-Tabu¾ka post obsahuje jednotlivé posty
+TabuÄ¾ka post obsahuje jednotlivÃ© posty
 #### post_like
-Tabu¾ka post_like je väzobná tabu¾ka, pre zaznamenávanie, ktoré posty lajkli jednotliví pouivatelia
+TabuÄ¾ka post_like je vÃ¤zobnÃ¡ tabuÄ¾ka, pre zaznamenÃ¡vanie, ktorÃ© posty lajkli jednotlivÃ­ pouÅ¾ivatelia
 #### user
-Tabu¾ka user obsahuje jednotlivıch userov
+TabuÄ¾ka user obsahuje jednotlivÃ½ch userov
 #### artist
-Tabu¾ka artist obsahuje jednotlivıch umelcov
+TabuÄ¾ka artist obsahuje jednotlivÃ½ch umelcov
 #### artist_like
-Tabu¾ka artist_like je väzobná tabu¾ka, pre zaznamenávanie, ktorıch umelcov lajkli jednotliví pouivatelia
+TabuÄ¾ka artist_like je vÃ¤zobnÃ¡ tabuÄ¾ka, pre zaznamenÃ¡vanie, ktorÃ½ch umelcov lajkli jednotlivÃ­ pouÅ¾ivatelia
 #### concert
-Tabu¾ka concert obsahuje jednotlivé koncerty
+TabuÄ¾ka concert obsahuje jednotlivÃ© koncerty
 #### style
-Tabu¾ka concert obsahuje jednotlivé štıly
+TabuÄ¾ka concert obsahuje jednotlivÃ© Å¡tÃ½ly
 #### artist_style
-Tabu¾ka artist_style je väzobná tabu¾ka, pre zaznamenávanie, aké štıly preferujú jednotliví umelci
+TabuÄ¾ka artist_style je vÃ¤zobnÃ¡ tabuÄ¾ka, pre zaznamenÃ¡vanie, akÃ© Å¡tÃ½ly preferujÃº jednotlivÃ­ umelci
 #### ticket
-Tabu¾ka concert obsahuje jednotlivé lístky
+TabuÄ¾ka concert obsahuje jednotlivÃ© lÃ­stky
 
-### Optimalizácia
+### OptimalizÃ¡cia
 
-Aby aplikácia prebiehala v èo najoptimálnejšom èase aj keï tabu¾ky obsahujú obrovské mnostvo dát, sme vytvorili indexy pre vyh¾adávanie dát v tabu¾ke:
+Aby aplikÃ¡cia prebiehala v Äo najoptimÃ¡lnejÅ¡om Äase aj keÄ tabuÄ¾ky obsahujÃº obrovskÃ© mnoÅ¾stvo dÃ¡t, sme vytvorili indexy pre vyhÄ¾adÃ¡vanie dÃ¡t v tabuÄ¾ke:
 
 	CREATE INDEX login_index ON "user" (email, PASSWORD)
 	CREATE INDEX event_filter_index ON event (LOWER(NAME) VARCHAR_PATTERN_OPS, LOWER(country) VARCHAR_PATTERN_OPS, LOWER(city) VARCHAR_PATTERN_OPS, ticket_price)
@@ -105,10 +105,6 @@ Aby aplikácia prebiehala v èo najoptimálnejšom èase aj keï tabu¾ky obsahujú obro
 	CREATE INDEX event_filter_index_name_city_ticket ON event (LOWER(NAME) VARCHAR_PATTERN_OPS, LOWER(city) VARCHAR_PATTERN_OPS, ticket_price);
 	CREATE INDEX event_filter_index_country_city_ticket ON event (LOWER(country) VARCHAR_PATTERN_OPS, LOWER(city) VARCHAR_PATTERN_OPS, ticket_price);
 
-### Technická dokumentácia
+### TechnickÃ¡ dokumentÃ¡cia
 
-Program je naprogramovanı v Jave a na spojenie s databázou sme pouili jdbc connector, databázu sme riešili cez PostgreSQL. 
-
- 
-
-
+Program je naprogramovanÃ½ v Jave a na spojenie s databÃ¡zou sme pouÅ¾ili jdbc connector, databÃ¡zu sme rieÅ¡ili cez PostgreSQL. Pre databÃ¡zovÃ© a dÃ¡tovÃ© objekty 'user'-a sme vyuÅ¾ili nÃ¡vrhovÃ½ vzor Singleton. Na frontend aplikÃ¡cie sme pouÅ¾ili Java Swing.
