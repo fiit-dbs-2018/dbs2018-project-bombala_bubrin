@@ -18,26 +18,26 @@ Po spustení aplikácie sa na obrazovke zobrazia dve políèka a dva tlaèidlá. Prvé 
 
 Tlaèidlo Login spustí príkaz ```"SELECT * FROM \"user\" WHERE email LIKE '" + username + "' AND password LIKE '" + password + "'"``` , ktorı zistí èi sa v databáze nachádza danı pouivate¾ s danım heslom. Ak áno obrazovka sa presunie do hlavného okna, inak sa zobrazí oznam o tom, e proces Login neprebehol úspešne.
 
-![Login](./Pictures/login.jpg)
+![Login](./Pictures/login.png)
 
 **2.Registration**
 
 Na obrazovke po spustení aplikácie sa tak isto nachádza tlaèidlo Registration. Po stlaèení tohto tlaèidla sa presunie obrazovka do ïa¾šieho okna, kde má pouívate¾ monos sa zaregistrova (vytvori nového usera). V tomto okne vyplní puívae¾ potrebné údaje sa stlaèí tlaèidlo Register, ktoré spustí príkaz ```"INSERT INTO public.user (name, surname, password, email, sex) VALUES" + " ('" + name + "', '" + surname + "', '" + password + "', '" + email + "', " + sex + ");"``` , ktorı vloí pouívate¾a do databázy.
 	
-![Registration](./Pictures/registration.jpg)	
+![Registration](./Pictures/registration.png)	
 	
 **3.Home** 
 
 Po úspešnom logine sa zobrazí hlavné okno, v ktorom sa vykresluje na ¾avej strane obrazovky navigation bar, ktorı zobrazuje tlaèidlá home, profil, events a logout a na pravej strane obrazovky sa zobrazujú posty eventov, ktoré má pouívate¾ lajknuté. Toto zobrazenie postov zabezpeèuje príkaz ```"SELECT p.*, e.name, coalesce(sss.opinion, 0) AS opinion, coalesce(sub.like_count, 0) AS like_count FROM \"user\" AS u JOIN event_like AS el ON u.id = el.user_id JOIN event AS e" + " JOIN post AS p On p.event_id = e.id" + " ON e.id = el.event_id" + " LEFT JOIN (SELECT p.opinion, p.post_id FROM \"user\" AS u JOIN posts_like AS p ON u.id = p.user_id WHERE u.id = " + userId + " ) AS sss" + " ON sss.post_id = p.id LEFT JOIN (SELECT p.post_id, SUM(p.opinion) AS like_count FROM posts_like AS p GROUP BY p.post_id) AS sub" + " ON sub.post_id = p.id" + " WHERE u.id = " + userId + " ORDER BY p.id " + "LIMIT 3 OFFSET " + actualPosition*3;``` , ktorı sa stará aj o stránkovanie. Toto hlavné okno sa zobrazí pouivate¾ovi aj po stlaèení tlaèidla Home.
 Na to aby pouávate¾ mohol prvı krát lajknú post vyuívame príkaz ```"INSERT INTO posts_like (user_id, post_id, opinion) VALUES" + "  (" + getUserId() + "," + postId + "," + opinion + ");"``` . Ak u puívate¾ má na post zadanı opinion a chce ho zmeni vyuíva sa príkaz ```UPDATE posts_like " + "SET opinion = " + opinion + " " + "WHERE user_id = " + getUserId() + " AND " + "post_id = " + postId + ";"```. Na zistenie, èi u pouívate¾ lajkol nejakı post vyuívame príkaz ```"SELECT * FROM posts_like WHERE user_id = " + getUserId() + " AND post_id = " + postId + ";"```
 	
-![Home](./Pictures/posty.jpg)	
+![Home](./Pictures/posty.png)	
 	
 **4.Profil**
 
 Po stlaèení tlaèidlá Profile sa pouívate¾ovi zobrazí okno, v ktorom je moné meni pouivate¾ské údaje. Najprv sa mu ukáú pôvodné osobné údaje. Tieto údaje môe zmeni a zmenu zaznamená tlaèidlom Submit, ktoré spúša príkaz ```"UPDATE \"user\" " + "SET name = '"+name+"', " + "    surname = '"+surname+"', " + "    sex = "+sex+" " + "WHERE id = "+Data.getInstance().getUser().getId()+";"``` . V okne, ktoré sa zobrazí po stlaèení tlaèidla Profile, je tak isto ïa¾šie tlaèidlo Delete, ktoré zabezpeèuje vymazanie pouívate¾a z databázy prostredníctvom príkazu ```"DELETE FROM \"user\" " + "WHERE id = "+Data.getInstance().getUser().getId()+";"```
 
-![Profil](./Pictures/profil.jpg)
+![Profil](./Pictures/profil.png)
 
 **5.Event**
 
@@ -62,7 +62,7 @@ Po stlaèení tlaèidla Events, sa pouívate¾ovi zobrazí okno, v ktorom si môe vyf
 
 Pouívate¾ má monos zaèa sledova posty vyhladaného eventu prostredníctvom príkazu ```"INSERT INTO event_like (user_id, event_id, opinion) VALUES ("+Data.getInstance().getUser().getId()+","+id+",1);"```
 
-![Event](./Pictures/eventy.jpg)
+![Event](./Pictures/eventy.png)
 
 ### Data Model
 	
