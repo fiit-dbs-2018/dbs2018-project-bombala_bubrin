@@ -1,12 +1,14 @@
 package project.db_connection;
 
 import project.model.Data;
+import project.model.EventObj;
 import project.model.Post;
 import project.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DbConnectionBuilder {
 
@@ -16,10 +18,12 @@ public class DbConnectionBuilder {
         dbResolver = new DbResolver();
         dbResolver.connect();
         postOffset = 0;
+        eventOffset = 0;
     }
 
     private int userId;
     private int postOffset;
+    private int eventOffset;
 
     public int getUserId() {
         return userId;
@@ -185,5 +189,38 @@ public class DbConnectionBuilder {
                 "WHERE id = "+Data.getInstance().getUser().getId()+";";
 
         dbResolver.delete(query);
+    }
+
+    public ArrayList<EventObj> filterEvents(String name, String country, String city, double from, double to, int actualPosition) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM event WHERE ");
+        queryBuilder.append("lower(name) LIKE LOWER('").append(name).append("%') AND ");
+        queryBuilder.append("lower(country) LIKE lower('").append(country).append("%') AND ");
+        queryBuilder.append("lower(city) LIKE LOWER('").append(city).append("%') AND ");
+        queryBuilder.append("ticket_price < ").append(to).append(" AND ticket_price > ").append(from);
+        queryBuilder.append(" LIMIT 3 OFFSET ").append(actualPosition*3);
+
+        System.out.print(queryBuilder.toString());
+
+        ResultSet result = dbResolver.select(queryBuilder.toString());
+        ArrayList<EventObj> events = new ArrayList<>();
+        try {
+            while (result.next()) {
+                EventObj eventObj = new EventObj(result);
+                events.add(eventObj);
+                eventOffset = eventObj.getId();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                result.getStatement().close();
+                result.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return events;
     }
 }

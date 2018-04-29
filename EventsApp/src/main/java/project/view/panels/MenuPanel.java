@@ -40,4 +40,8 @@ public class MenuPanel extends JPanel {
     public void showProfile() {
         contentPanel.showProfile();
     }
+
+    public void showEvents() {
+        contentPanel.showEvents();
+    }
 }

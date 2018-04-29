@@ -6,13 +6,16 @@ public class Event extends JPanel {
 
     ContentPanel parent;
 
+    private EventContent eventContent;
+    private  Filter filter;
+
     public Event(ContentPanel contentPanel){
         parent = contentPanel;
         setSize(650, 630);
         setLayout(null);
 
-        EventContent eventContent = new EventContent(this);
-        Filter filter = new Filter(this);
+        eventContent = new EventContent(this);
+        filter = new Filter(this);
         add(eventContent);
         add(filter);
 
@@ -22,4 +25,11 @@ public class Event extends JPanel {
 
     }
 
+    public void showEvents() {
+
+    }
+
+    public void filterEvents(String filterName, String filterCountry, String filterCity, int fromPrice, int toPrice, int filterInt,int pos) {
+        eventContent.filterEvents(filterName,filterCountry,filterCity,fromPrice,toPrice,filterInt,pos);
+    }
 }

@@ -52,6 +52,17 @@ public class NavigationBar extends JPanel {
                 logout();
             }
         });
+
+        events.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showEvents();
+            }
+        });
+    }
+
+    private void showEvents() {
+        parent.showEvents();
     }
 
     private void showProfile() {

@@ -14,7 +14,7 @@ public class MyFrame extends JFrame {
     private RegistrationPanel registrationPanel;
 
     public MyFrame() throws SQLException {
-        setSize(805, 670);
+        setSize(815, 670);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);

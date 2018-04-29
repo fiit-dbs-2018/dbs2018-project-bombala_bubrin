@@ -53,4 +53,10 @@ public class ContentPanel extends JPanel {
     public void logout() {
         parent.logout();
     }
+
+    public void showEvents() {
+        event.showEvents();
+        hideAllChildren();
+        event.setVisible(true);
+    }
 }
