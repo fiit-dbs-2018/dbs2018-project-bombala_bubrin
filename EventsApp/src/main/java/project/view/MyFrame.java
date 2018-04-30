@@ -1,76 +1,79 @@
 package project.view;
 
-import project.controller.DbResolver;
-import project.utils.RandomString;
+import project.view.panels.LoginPanel;
+import project.view.panels.MenuPanel;
+import project.view.panels.RegistrationPanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class MyFrame extends JFrame {
 
-    private DbResolver dbResolver;
+    private final LoginPanel loginPanel;
+    private MenuPanel menuPanel;
+    private RegistrationPanel registrationPanel;
 
-    public MyFrame() {
-        dbResolver = new DbResolver();
-        dbResolver.connect();
-        setSize(800, 600);
+    public MyFrame() throws SQLException {
+        setSize(815, 670);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-//        for (int i = 0; i < 10000; i++) {
-//            System.out.println("inserting batch " + i);
-//            insert10000users();
-//        }
+        setLayout(null);
 
-        final JButton registerButton = new JButton("register");
-        this.add(registerButton);
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registerUser("Filip", "Sukenik", "muss@gmail.com", "password", 1);
-            }
-        });
+        loginPanel = new LoginPanel(this);
+
+        add(loginPanel);
+
+        registrationPanel = new RegistrationPanel(this);
+        add(registrationPanel);
+        registrationPanel.setVisible(false);
+        try {
+            menuPanel = new MenuPanel(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        add(menuPanel);
+        menuPanel.setVisible(false);
+
+        refresh();
+    }
+
+    private void refresh() {
         repaint();
         revalidate();
     }
 
-    private void insert10000users() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("INSERT INTO users (name, surname, password, email, sex) VALUES ");
-        for (int i = 0; i < 100; i++) {
-            if (i != 0) {
-                builder.append(", ");
-            }
-            builder.append("('").append(randomString(10)).append("', '").append(randomString(10)).append("', '").append(randomString(5)).append("', '").append(randomString(4)).append("@gmail.com', 1)");
-        }
-        dbResolver.insert(builder.toString());
-        System.out.println(builder);
+    public void openAfterLogin() {
+        hideAllPanels();
+
+        menuPanel.setVisible(true);
+        menuPanel.showPosts();
+        refresh();
     }
 
-    private String randomString(int length) {
-        return new RandomString(length).nextString();
+    public void openAfterReg(){
+        hideAllPanels();
+
+        registrationPanel.setVisible(true);
     }
 
-    private void login(String email, String password) {
-        String query = "SELECT * FROM users WHERE email LIKE '" + email + "' AND password LIKE '" + password + "'";
-        if (dbResolver.select(query)) {
-            System.out.println("Succesfull login huraa");
-        } else {
-            System.out.println("RIP");
-        }
+    public void openAfterRegistered(){
+        hideAllPanels();
+        loginPanel.setVisible(true);
     }
 
-
-
-
-
-    private void registerUser(String name, String surname, String email, String password, int sex) {
-        String query = "INSERT INTO users (name, surname, password, email, sex) VALUES ('" + name + "" +
-                "', '" + surname + "', '" + password + "', '" + email +"', " + sex +")";
-        System.out.println("I am inserting user " + name + " " + surname);
-        System.out.print(query);
-        dbResolver.insert(query);
+    private void hideAllPanels() {
+        loginPanel.setVisible(false);
+        registrationPanel.setVisible(false);
+        menuPanel.setVisible(false);
     }
 
+    public void closeAfterLogin() {
+        JOptionPane.showMessageDialog(this, "Login failed");
+    }
+
+    public void logout() {
+        hideAllPanels();
+        loginPanel.setVisible(true);
+    }
 }
